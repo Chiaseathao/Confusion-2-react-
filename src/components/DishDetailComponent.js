@@ -10,17 +10,17 @@ class DishDetails extends Component {
         };
     }
 
-    renderDetail(details) {
-        if (details != null) {
+    renderDetail(dish) {
+        if (dish != null) {
 
             let options = {year: 'numeric', month: 'short', day:'numeric'};
 
-            const comments = details.comments.map((detail) => {
+            const comments = dish.comments.map((comment) => {
                 return (
-                    <div key={detail.id}>
+                    <div key={comment.id}>
                         <p>
-                            {detail.comment}
-                            <br/>-- {detail.author} , <span>{new Date(detail.date).toLocaleDateString("en-us", options)}</span>
+                            {comment.comment}
+                            <br/>-- {comment.author} , <span>{new Date(comment.date).toLocaleDateString("en-us", options)}</span>
                         </p>
                     </div>
                 );
@@ -28,12 +28,12 @@ class DishDetails extends Component {
 
             return (
                 <div className="row">
-                    <div className="col-12 col-md-5 ml-1">
+                    <div className="col-12 col-md-5 ml-1 mb-2">
                         <Card>
-                            <CardImg width="100%" src={details.image} alt={details.name}/>
+                            <CardImg width="100%" src={dish.image} alt={dish.name}/>
                             <CardBody>
-                                <CardTitle style={{fontWeight: "bold"}}>{details.name}</CardTitle>
-                                <CardText>{details.description}</CardText>
+                                <CardTitle style={{fontWeight: "bold"}}>{dish.name}</CardTitle>
+                                <CardText>{dish.description}</CardText>
                             </CardBody>
                         </Card>
                     </div>
@@ -52,12 +52,11 @@ class DishDetails extends Component {
         }
     };
 
-
     render() {
 
         return (
         <div className="container">
-            {this.renderDetail(this.props.selectedDish)}
+            {this.renderDetail(this.props.dish)}
         </div>
         )
     }

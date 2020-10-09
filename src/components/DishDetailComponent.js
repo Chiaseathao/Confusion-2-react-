@@ -8,6 +8,16 @@ class DishDetails extends Component {
 
         this.state = {
         };
+
+        console.log('DishDetail Component constructor invoked')
+    }
+
+    componentDidMount() {
+        console.log('Dishdetail Component componentDidMount invoked')
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('Dishdetail Component componentDidUpdate invoked')
     }
 
     renderDetail(dish) {
@@ -53,6 +63,8 @@ class DishDetails extends Component {
     };
 
     render() {
+
+        console.log('Dishdetail Component componentDidRender invoked')
 
         return (
         <div className="container">

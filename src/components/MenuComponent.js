@@ -8,9 +8,17 @@ class Menu extends Component {
 
         this.state = {
         };
+
+        console.log('Menu Component constructor invoked')
+    }
+
+    componentDidMount() {
+        console.log('Menu Component componentDidMount invoked')
     }
 
     render() {
+
+        console.log('Menu Component componentDidRender invoked')
 
         const menu = this.props.dishes.map((dish) => {
             return (

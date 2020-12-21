@@ -15,7 +15,7 @@ import {Link} from "react-router-dom";
 import {Control, Errors, LocalForm} from "react-redux-form";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
-
+import {Fade, Stagger } from 'react-animation-components'
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
 const minLength = (len) => (val) => (val) && (val.length >= len)
@@ -130,38 +130,41 @@ function RenderDish ({dish}) {
 
 function RenderComments ({comments, postComment, dishId}) {
 
-    let options = {year: 'numeric', month: 'short', day: 'numeric'};
-
-    const comment = comments.map((comment) => {
+    if (comments != null)
         return (
             <div>
-                <p>
-                    {comment.comment}
-                    <br/>-- {comment.author} , <span>{new Date(comment.date).toLocaleDateString("en-us", options)}</span>
-                </p>
+                <h4>Comments</h4>
+                <ul className="list-unstyled">
+                    <Stagger in>
+                        {comments.map((comment) => {
+                            return (
+                                <Fade in>
+                                    <li key={comment.id}>
+                                        <p>
+                                            {comment.comment}
+                                            <br/>-- {comment.author} , <span>{new Date(comment.date).toLocaleDateString("en-us")}</span>
+                                        </p>
+                                    </li>
+                                </Fade>
+                            );
+                        })}
+                    </Stagger>
+                </ul>
+                <CommentForm dishId={dishId} postComment={postComment}/>
             </div>
-        );
-    })
 
-    return (
-        <div>
-            <div key={comments.id}>
-                {comment}
-            </div>
-            <CommentForm dishId={dishId} postComment={postComment}/>
-        </div>
-    )
+        )
 }
 
 const DishDetail = (props) => {
 
     if (props.isLoading) {
         return (
-          <div className="container">
-              <div className="row">
-                  <Loading />
-              </div>
-          </div>
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
         );
     }
 
@@ -194,7 +197,6 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish}/>
                     </div>
                     <div className="col-12 col-md-4 ml-2">
-                        <h4 style={{fontWeight: "bold"}}>Comments</h4>
                         <RenderComments
                             comments={props.comments}
                             postComment={props.postComment}
@@ -214,3 +216,4 @@ const DishDetail = (props) => {
 }
 
 export default DishDetail;
+

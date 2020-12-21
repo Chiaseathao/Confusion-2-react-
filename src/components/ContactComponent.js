@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from "reactstrap";
 import {Link} from "react-router-dom";
-import { Control, Form, Errors, actions } from "react-redux-form";
+import { Control, Form, Errors } from "react-redux-form";
 
 
 const required = (val) => val && val.length;
@@ -18,10 +18,19 @@ class Contact extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // componentDidUpdate(prevProps) {
+    //     if (this.props.latestFeedback.id !== prevProps.latestFeedback.id) {
+    //         alert("Thank you for your feedback! " + JSON.stringify(this.props.latestFeedback))
+    //     }
+    // }
+
     handleSubmit(values) {
+
+        this.props.postFeedback(values.firstName, values.lastName, values.telNum, values.email, values.agree, values.contactType)
+
         console.log("Current State is: " + JSON.stringify(values));
 
-        alert("Current State is: " + JSON.stringify(values));
+        //alert("Thank you for your feedback! " + JSON.stringify(values));
 
         this.props.resetFeedbackForm();
     }
@@ -30,6 +39,7 @@ class Contact extends Component {
 
         return (
             <div className="container">
+                {/*{JSON.stringify(this.props.feedbacks)}*/}
                 <div className="row">
                     <Breadcrumb>
                         <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
@@ -182,6 +192,7 @@ class Contact extends Component {
                                         <Label check>
                                             <Control.checkbox model=".agree"
                                                    className="form-check-input"
+                                                   id="agree"
                                                    name="agree"
                                             />
                                             <strong>May we contact you?</strong>
@@ -192,6 +203,7 @@ class Contact extends Component {
                                 <Col md={{size: 3, offset: 1}}>
                                     <Control.select model=".contactType"
                                            className="form-control"
+                                           id="contactType"
                                            name="contactType"
                                     >
                                         <option>Tel.</option>
